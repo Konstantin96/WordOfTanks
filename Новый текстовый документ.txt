@@ -1,0 +1,36 @@
+CREATE TABLE Customer(
+Customer_ID int PRIMARY KEY IDENTITY(1,1),
+Customer_Name varchar(200),
+Customer_Email varchar(250) UNIQUE
+)
+ALTER TABLE Customer DROP COLUMN Bank_Account
+ALTER TABLE Customer ADD Bank_Account varchar(200) DEFAULT '' NOT NULL
+INSERT INTO Customer(Customer_Name,Customer_Email) values('Kostya','klyukin.kostya@gmail.com' )
+INSERT INTO Customer(Customer_Name,Customer_Email) values('Sasha','alexandra@mail.ru' )
+INSERT INTO Customer(Customer_Name,Customer_Email) values('Dima','dmitriy@yandex.ru' )
+SELECT *FROM Customer
+
+CREATE TABLE Product(
+Product_ID int PRIMARY KEY IDENTITY(1,1),
+Product_art int,
+Product_Name varchar(250),
+Product_Price decimal(10,2)
+)
+INSERT INTO Product(Product_art,Product_Name,Product_Price) values(8146,'Asus x555lb',300000.56 )
+INSERT INTO Product(Product_art,Product_Name,Product_Price) values(1986,'Acer g570',150000.85 )
+INSERT INTO Product(Product_art,Product_Name,Product_Price) values(1658,'Asus x540s',200000.95 )
+INSERT INTO Product(Product_art,Product_Name,Product_Price) values(2522,'Asus 423',36540.95 )
+
+DELETE FROM product WHERE Product_ID=4
+
+CREATE TABLE Orders(
+Order_ID int PRIMARY KEY IDENTITY(1,1),
+Customer_ID int REFERENCES Customer(Customer_ID),
+Product_ID int REFERENCES Product(Product_ID)
+)
+INSERT INTO Orders(Customer_ID,Product_ID) values(1,1 )
+INSERT INTO Orders(Customer_ID,Product_ID) values(2,3 )
+INSERT INTO Orders(Customer_ID,Product_ID) values(3,4 )
+SELECT *FROM product
+
+SELECT Customer.Customer_Name ,Product.Product_Name,Product.Product_Price FROM Orders,Product,Customer WHERE Customer.Customer_ID=Product.Product_ID AND Product.Product_ID=Orders.Product_ID AND Order_ID=2
